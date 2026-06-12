@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cursos · Luanda Shop | Formación Profesional en Belleza</title>
+<meta name="description" content="Cursos profesionales de uñas, extensiones de pestañas, coloración, moldeado permanente y trenzas en Alfafar, Valencia. Certificado incluido.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --black:#080808;--black2:#111;--black3:#161616;
+  --gold:#C9A84C;--gold2:#E0C46A;--gold3:#9A7C30;
+  --white:#F5F0E8;--gray:#888;
+  --serif:'Cormorant Garamond',Georgia,serif;
+  --sans:'DM Sans',system-ui,sans-serif;
+}
+html{scroll-behavior:smooth}
+body{background:var(--black);color:var(--white);font-family:var(--sans);font-weight:400;line-height:1.6;overflow-x:hidden}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:20px 60px;display:flex;align-items:center;justify-content:space-between;transition:background .4s,padding .4s}
+nav.scrolled{background:rgba(8,8,8,0.94);backdrop-filter:blur(18px);padding:13px 60px;border-bottom:1px solid rgba(201,168,76,0.12)}
+.nav-logo{display:flex;align-items:center;text-decoration:none}
+.nav-logo img{height:52px;width:52px;object-fit:contain;border-radius:50%}
+.nav-logo-text{display:none;font-family:var(--serif);font-size:22px;font-weight:600;color:var(--gold);letter-spacing:.08em}
+.nav-logo-text span{color:var(--white);font-weight:300}
+.nav-back{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:rgba(245,240,232,0.55);text-decoration:none;transition:color .25s}
+.nav-back:hover{color:var(--gold)}
+.nav-back:hover svg{transform:translateX(-3px)}
+.nav-back svg{transition:transform .2s}
+
+/* HEADER */
+.page-header{padding:140px 60px 80px;text-align:center;border-bottom:1px solid rgba(201,168,76,0.1);background:var(--black2)}
+.page-badge{display:inline-block;font-size:10px;font-weight:500;letter-spacing:.25em;text-transform:uppercase;color:var(--gold);border:1px solid rgba(201,168,76,0.35);padding:7px 20px;border-radius:100px;margin-bottom:28px}
+.page-title{font-family:var(--serif);font-size:clamp(44px,8vw,90px);font-weight:300;line-height:.95;letter-spacing:.02em;margin-bottom:14px}
+.page-title em{color:var(--gold);font-style:italic}
+.page-subtitle{font-size:15px;font-weight:300;color:rgba(245,240,232,0.45);max-width:500px;margin:0 auto}
+
+/* CURSO BLOCK */
+.curso-block{padding:100px 60px;border-bottom:1px solid rgba(201,168,76,0.07)}
+.curso-block:nth-child(even){background:var(--black2)}
+.curso-block:nth-child(odd){background:var(--black)}
+.curso-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start}
+.curso-flyer{position:relative;border-radius:4px;overflow:hidden;background:var(--black3);border:1px solid rgba(201,168,76,0.12);min-height:420px;display:flex;align-items:center;justify-content:center}
+.curso-flyer img{width:100%;height:100%;object-fit:cover;display:block}
+.flyer-placeholder{text-align:center;padding:60px 40px;color:rgba(201,168,76,0.25)}
+.flyer-placeholder svg{width:52px;height:52px;margin-bottom:16px;display:block;margin-left:auto;margin-right:auto}
+.flyer-placeholder p{font-size:11px;letter-spacing:.15em;text-transform:uppercase}
+.curso-badge{font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:16px;opacity:.7}
+.curso-title{font-family:var(--serif);font-size:clamp(32px,4vw,52px);font-weight:400;color:var(--white);margin-bottom:10px;line-height:1.1}
+.curso-tagline{font-family:var(--serif);font-size:18px;font-weight:300;color:rgba(245,240,232,0.5);font-style:italic;margin-bottom:24px}
+.curso-price-tag{display:inline-flex;align-items:center;gap:10px;background:rgba(201,168,76,0.1);border:1px solid rgba(201,168,76,0.25);border-radius:100px;padding:8px 20px;margin-bottom:30px}
+.curso-price-tag svg{color:var(--gold);width:14px;height:14px}
+.curso-price-tag span{font-size:12px;letter-spacing:.06em;color:rgba(245,240,232,0.7)}
+.curso-price-tag strong{font-family:var(--serif);font-size:16px;font-weight:400;color:var(--gold)}
+
+/* INCLUYE */
+.bloque{margin-bottom:32px}
+.bloque-label{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:14px;display:flex;align-items:center;gap:10px}
+.bloque-label::after{content:'';flex:1;height:1px;background:rgba(201,168,76,0.15)}
+.incluye-list{display:flex;flex-direction:column;gap:9px}
+.inc-item{display:flex;align-items:center;gap:10px;font-size:14px;color:rgba(245,240,232,0.72)}
+.inc-item::before{content:'✓';color:var(--gold);font-weight:700;font-size:12px;min-width:14px}
+
+/* PROGRAMA */
+.programa-items{display:flex;flex-direction:column;gap:6px}
+.prog-item{font-size:13px;color:rgba(245,240,232,0.52);padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.04);display:flex;align-items:center;gap:10px}
+.prog-item::before{content:'';width:4px;height:4px;border-radius:50%;background:var(--gold);opacity:.5;min-width:4px}
+
+/* IDEAL PARA */
+.ideal-list{display:flex;flex-wrap:wrap;gap:8px}
+.ideal-tag{font-size:11px;letter-spacing:.08em;color:rgba(245,240,232,0.6);border:1px solid rgba(201,168,76,0.15);padding:6px 14px;border-radius:100px}
+
+/* WA BTN */
+.btn-wa-curso{display:inline-flex;align-items:center;gap:12px;background:#25D366;color:#fff;font-size:14px;font-weight:600;letter-spacing:.04em;padding:17px 32px;border-radius:4px;text-decoration:none;transition:background .2s,transform .15s;margin-top:12px}
+.btn-wa-curso:hover{background:#1ebe5d;transform:translateY(-2px)}
+.btn-wa-curso svg{width:20px;height:20px;fill:#fff;flex-shrink:0}
+
+/* CTA FINAL */
+.cta-final{padding:100px 60px;background:var(--black2);text-align:center;position:relative;overflow:hidden}
+.cta-final::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 70% at 50% 50%,rgba(201,168,76,0.07) 0%,transparent 65%);pointer-events:none}
+.cta-final-inner{position:relative;z-index:1;max-width:620px;margin:0 auto}
+.cta-final-tag{font-size:10px;letter-spacing:.25em;text-transform:uppercase;color:var(--gold);margin-bottom:20px;display:flex;align-items:center;justify-content:center;gap:10px}
+.cta-final-tag::before,.cta-final-tag::after{content:'';width:32px;height:1px;background:rgba(201,168,76,0.4)}
+.cta-final h2{font-family:var(--serif);font-size:clamp(36px,5vw,64px);font-weight:300;color:var(--white);margin-bottom:16px;line-height:1.1}
+.cta-final h2 em{color:var(--gold);font-style:italic}
+.cta-final p{font-size:15px;color:rgba(245,240,232,0.45);margin-bottom:40px;line-height:1.8}
+.plazas-badge{display:inline-flex;align-items:center;gap:8px;font-size:11px;color:rgba(245,240,232,0.4);margin-top:20px;letter-spacing:.04em}
+.plazas-dot{width:7px;height:7px;border-radius:50%;background:var(--gold);animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.85)}}
+
+/* FOOTER */
+.page-footer{background:var(--black3);border-top:1px solid rgba(201,168,76,0.1);padding:28px 60px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px}
+.pf-logo{font-family:var(--serif);font-size:18px;font-weight:600;color:var(--gold)}
+.pf-logo span{color:rgba(245,240,232,0.4);font-weight:300}
+.pf-copy{font-size:11px;color:rgba(245,240,232,0.2)}
+.pf-link{font-size:11px;color:rgba(245,240,232,0.28);text-decoration:none;letter-spacing:.08em;text-transform:uppercase;transition:color .2s}
+.pf-link:hover{color:var(--gold)}
+
+/* WAB */
+.wfab{position:fixed;bottom:28px;right:28px;z-index:200;width:54px;height:54px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(37,211,102,0.4);text-decoration:none;transition:transform .25s,box-shadow .25s}
+.wfab:hover{transform:scale(1.1);box-shadow:0 6px 28px rgba(37,211,102,0.55)}
+
+/* RESPONSIVE */
+@media(max-width:960px){
+  nav{padding:14px 20px}nav.scrolled{padding:12px 20px}
+  .page-header{padding:110px 24px 60px}
+  .curso-block{padding:72px 24px}
+  .curso-inner{grid-template-columns:1fr;gap:48px}
+  .curso-flyer{min-height:280px;order:-1}
+  .cta-final{padding:80px 24px}
+  .page-footer{padding:24px;flex-direction:column;text-align:center;gap:10px}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="mainNav">
+  <a href="index.html" class="nav-logo">
+    <img src="assets/luanda-logo.png" alt="Luanda" onerror="this.style.display='none';this.nextElementSibling.style.display='inline'">
+    <span class="nav-logo-text">LUANDA <span>SHOP</span></span>
+  </a>
+  <a href="index.html#cursos" class="nav-back">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+    Volver al inicio
+  </a>
+</nav>
+
+<!-- HEADER -->
+<div class="page-header">
+  <div class="page-badge">Formación · Alfafar, Valencia</div>
+  <h1 class="page-title">Nuestros <em>cursos</em></h1>
+  <p class="page-subtitle">Formación presencial con atención personalizada y certificado incluido en cada programa.</p>
+</div>
+
+<!-- ══ CURSO UÑAS ══════════════════════════════════════════════════════════ -->
+<div class="curso-block" id="unas">
+  <div class="curso-inner">
+    <div class="curso-flyer">
+      <img src="assets/flyer-unas.jpg" alt="Curso de Uñas"
+           onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+      <div class="flyer-placeholder" style="display:none">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+        <p>Añadir flyer del curso</p>
+      </div>
+    </div>
+    <div>
+      <div class="curso-badge">Uñas profesionales</div>
+      <h2 class="curso-title">Curso de Uñas</h2>
+      <p class="curso-tagline">Convierte tu pasión en tu profesión</p>
+      <div class="curso-price-tag">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2a10 10 0 1 0 0 20A10 10 0 0 0 12 2zm0 0v4m0 12v2M8 12h8"/></svg>
+        <span>Precio:</span>
+        <strong>390 € por módulo</strong>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;font-size:13px;color:rgba(245,240,232,0.45);margin-bottom:28px">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z"/><circle cx="12" cy="10" r="3"/></svg>
+        Alfafar, Valencia
+      </div>
+
+      <div class="bloque">
+        <div class="bloque-label">Incluye</div>
+        <div class="incluye-list">
+          <div class="inc-item">Material incluido</div>
+          <div class="inc-item">Certificado acreditativo</div>
+          <div class="inc-item">Formación desde cero</div>
+          <div class="inc-item">Atención personalizada</div>
+        </div>
+      </div>
+
+      <div class="bloque">
+        <div class="bloque-label">Programa completo</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
+          <div>
+            <div style="font-size:12px;font-weight:500;color:var(--gold);letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px">Módulo 1</div>
+            <div class="programa-items">
+              <div class="prog-item">Paso a paso para empezar</div>
+              <div class="prog-item">Materiales y productos</div>
+              <div class="prog-item">Técnicas básicas</div>
+            </div>
+          </div>
+          <div>
+            <div style="font-size:12px;font-weight:500;color:var(--gold);letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px">Módulo 2</div>
+            <div class="programa-items">
+              <div class="prog-item">Precios y negocio</div>
+              <div class="prog-item">Fotografía y redes</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bloque">
+        <div class="bloque-label">Ideal para</div>
+        <div class="ideal-list">
+          <span class="ideal-tag">Principiantes</span>
+          <span class="ideal-tag">Salida laboral</span>
+          <span class="ideal-tag">Emprendedoras</span>
+        </div>
+      </div>
+
+      <a href="https://wa.me/34610898948?text=Hola%21+Me+interesa+el+Curso+de+U%C3%B1as+(390%E2%82%AC%2Fm%C3%B3dulo).+%C2%BFPodr%C3%ADais+darme+m%C3%A1s+informaci%C3%B3n+y+fechas+disponibles%3F" target="_blank" class="btn-wa-curso">
+        <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+        Reservar por WhatsApp
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- ══ CURSO PESTAÑAS ══════════════════════════════════════════════════════ -->
+<div class="curso-block" id="pestanas">
+  <div class="curso-inner">
+    <div>
+      <div class="curso-badge">Estética profesional</div>
+      <h2 class="curso-title">Extensiones de Pestañas</h2>
+      <p class="curso-tagline">Formación intensiva de 8 horas</p>
+      <div style="margin-bottom:28px"></div>
+
+      <div class="bloque">
+        <div class="bloque-label">Incluye</div>
+        <div class="incluye-list">
+          <div class="inc-item">Kit profesional completo</div>
+          <div class="inc-item">Coffee break</div>
+          <div class="inc-item">Certificado acreditativo</div>
+          <div class="inc-item">Resolución de dudas</div>
+        </div>
+      </div>
+
+      <div class="bloque">
+        <div class="bloque-label">Programa completo</div>
+        <div class="programa-items">
+          <div class="prog-item">Origen de las pestañas</div>
+          <div class="prog-item">Anatomía de los ojos</div>
+          <div class="prog-item">Estructura de las pestañas</div>
+          <div class="prog-item">Ciclo de vida</div>
+          <div class="prog-item">Tamaños y curvaturas</div>
+          <div class="prog-item">Técnica clásica</div>
+          <div class="prog-item">Volumen tecnológico</div>
+          <div class="prog-item">Adhesivos</div>
+          <div class="prog-item">Cuidados posteriores</div>
+          <div class="prog-item">Mapping</div>
+          <div class="prog-item">Mantenimiento</div>
+          <div class="prog-item">Bioseguridad</div>
+          <div class="prog-item">Fotografía</div>
+        </div>
+      </div>
+
+      <div class="bloque">
+        <div class="bloque-label">Ideal para</div>
+        <div class="ideal-list">
+          <span class="ideal-tag">Principiantes</span>
+          <span class="ideal-tag">Profesionales que quieran perfeccionarse</span>
+        </div>
+      </div>
+
+      <a href="https://wa.me/34610898948?text=Hola%21+Me+interesa+el+Curso+de+Extensiones+de+Pesta%C3%B1as.+%C2%BFPodr%C3%ADais+darme+m%C3%A1s+informaci%C3%B3n+y+fechas+disponibles%3F" target="_blank" class="btn-wa-curso">
+        <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+        Reservar por WhatsApp
+      </a>
+    </div>
+    <div class="curso-flyer">
+      <img src="assets/flyer-pestanas.jpg" alt="Curso Extensiones de Pestañas"
+           onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+      <div class="flyer-placeholder" style="display:none">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+        <p>Añadir flyer del curso</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ CURSO COLOR ═════════════════════════════════════════════════════════ -->
+<div class="curso-block" id="color">
+  <div class="curso-inner">
+    <div class="curso-flyer">
+      <img src="assets/flyer-color.jpg" alt="Curso Moldeado Permanente y Color"
+           onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+      <div class="flyer-placeholder" style="display:none">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+        <p>Añadir flyer del curso</p>
+      </div>
+    </div>
+    <div>
+      <div class="curso-badge">Color &amp; Técnicas</div>
+      <h2 class="curso-title">Moldeado Permanente y Color</h2>
+      <p class="curso-tagline">Color, mechas y moldeado profesional</p>
+      <div style="margin-bottom:28px"></div>
+
+      <div class="bloque">
+        <div class="bloque-label">Aprenderás</div>
+        <div class="incluye-list">
+          <div class="inc-item">Colorimetría</div>
+          <div class="inc-item">Colores fantasía</div>
+          <div class="inc-item">Mechas</div>
+          <div class="inc-item">Moldeado permanente</div>
+          <div class="inc-item">Rizos naturales</div>
+          <div class="inc-item">Barba</div>
+        </div>
+      </div>
+
+      <div class="bloque">
+        <div class="bloque-label">Programa completo</div>
+        <div class="programa-items">
+          <div class="prog-item">Teoría del color</div>
+          <div class="prog-item">Técnicas de color</div>
+          <div class="prog-item">Mechas</div>
+          <div class="prog-item">Puentes cistinos</div>
+          <div class="prog-item">Moldeado permanente</div>
+          <div class="prog-item">Aplicación en barba</div>
+          <div class="prog-item">Prácticas reales</div>
+        </div>
+      </div>
+
+      <div class="bloque">
+        <div class="bloque-label">Ideal para</div>
+        <div class="ideal-list">
+          <span class="ideal-tag">Barberos</span>
+          <span class="ideal-tag">Estilistas</span>
+          <span class="ideal-tag">Emprendedores</span>
+          <span class="ideal-tag">Principiantes</span>
+        </div>
+      </div>
+
+      <a href="https://wa.me/34610898948?text=Hola%21+Me+interesa+el+Curso+de+Moldeado+Permanente+y+Color.+%C2%BFPodr%C3%ADais+darme+m%C3%A1s+informaci%C3%B3n+y+fechas+disponibles%3F" target="_blank" class="btn-wa-curso">
+        <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+        Reservar por WhatsApp
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- ══ CURSO TRENZAS ═══════════════════════════════════════════════════════ -->
+<div class="curso-block" id="trenzas">
+  <div class="curso-inner">
+    <div>
+      <div class="curso-badge">Trenzas</div>
+      <h2 class="curso-title">Trenzas Profesionales</h2>
+      <p class="curso-tagline">Impartido por Ana Belén del Valle</p>
+      <div class="curso-price-tag" style="margin-bottom:28px">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2a10 10 0 1 0 0 20A10 10 0 0 0 12 2zm0 0v4m0 12v2M8 12h8"/></svg>
+        <span>Precio:</span>
+        <strong>450 €</strong>
+      </div>
+
+      <div class="bloque">
+        <div class="bloque-label">Aprenderás</div>
+        <div class="incluye-list">
+          <div class="inc-item">Técnicas profesionales</div>
+          <div class="inc-item">Trenzas comerciales</div>
+          <div class="inc-item">Formación práctica</div>
+        </div>
+      </div>
+
+      <div class="bloque">
+        <div class="bloque-label">Ideal para</div>
+        <div class="ideal-list">
+          <span class="ideal-tag">Peluqueros</span>
+          <span class="ideal-tag">Estilistas</span>
+          <span class="ideal-tag">Amantes del trenzado</span>
+        </div>
+      </div>
+
+      <a href="https://wa.me/34610898948?text=Hola%21+Me+interesa+el+Curso+de+Trenzas+Profesionales+(450%E2%82%AC).+%C2%BFPodr%C3%ADais+darme+m%C3%A1s+informaci%C3%B3n+y+fechas+disponibles%3F" target="_blank" class="btn-wa-curso">
+        <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+        Reservar por WhatsApp
+      </a>
+    </div>
+    <div class="curso-flyer">
+      <img src="assets/flyer-trenzas.jpg" alt="Curso de Trenzas"
+           onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+      <div class="flyer-placeholder" style="display:none">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+        <p>Añadir flyer del curso</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ CTA FINAL ═══════════════════════════════════════════════════════════ -->
+<div class="cta-final">
+  <div class="cta-final-inner">
+    <div class="cta-final-tag">Plazas limitadas</div>
+    <h2>¿Querés reservar <em>tu plaza?</em></h2>
+    <p>Plazas limitadas para garantizar una atención personalizada y el máximo aprovechamiento de cada alumna.</p>
+    <a href="https://wa.me/34610898948?text=Hola%21+Quiero+reservar+mi+plaza+en+uno+de+vuestros+cursos.+%C2%BFPodr%C3%ADais+informarme+sobre+disponibilidad+y+fechas%3F" target="_blank" class="btn-wa-curso" style="margin:0 auto">
+      <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+      Reservar por WhatsApp
+    </a>
+    <div class="plazas-badge">
+      <span class="plazas-dot"></span>
+      Plazas limitadas — respondemos en menos de 24h
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="page-footer">
+  <div class="pf-logo">LUANDA <span>SHOP</span></div>
+  <span class="pf-copy">© 2026 Luanda Shop · Alfafar, Valencia</span>
+  <a href="index.html" class="pf-link">← Volver al inicio</a>
+</footer>
+
+<!-- WAB -->
+<a href="https://wa.me/34610898948" target="_blank" class="wfab" title="WhatsApp">
+  <svg viewBox="0 0 24 24" width="26" height="26" fill="#fff"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+</a>
+
+<script>
+const nav = document.getElementById('mainNav');
+window.addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 40));
+</script>
+</body>
+</html>
