@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tienda · Luanda Shop | Productos de Peluquería</title>
+<meta name="description" content="Tienda de productos profesionales de peluquería y belleza. Fanola, Glossco, Revlon y más. Envíos a toda España.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --black:#080808;--black2:#111;--black3:#161616;
+  --gold:#C9A84C;--gold2:#E0C46A;--gold3:#9A7C30;
+  --white:#F5F0E8;--gray:#888;
+  --serif:'Cormorant Garamond',Georgia,serif;
+  --sans:'DM Sans',system-ui,sans-serif;
+}
+html{scroll-behavior:smooth}
+body{background:var(--black);color:var(--white);font-family:var(--sans);font-weight:400;line-height:1.6;overflow-x:hidden}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:20px 60px;display:flex;align-items:center;justify-content:space-between;transition:background .4s,padding .4s}
+nav.scrolled{background:rgba(8,8,8,0.94);backdrop-filter:blur(18px);padding:13px 60px;border-bottom:1px solid rgba(201,168,76,0.12)}
+.nav-logo{display:flex;align-items:center;text-decoration:none}
+.nav-logo img{height:52px;width:52px;object-fit:contain;border-radius:50%;transition:transform .3s}
+.nav-logo img:hover{transform:scale(1.07)}
+.nav-logo-text{display:none;font-family:var(--serif);font-size:22px;font-weight:600;color:var(--gold);letter-spacing:.08em}
+.nav-logo-text span{color:var(--white);font-weight:300}
+.nav-back{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:rgba(245,240,232,0.55);text-decoration:none;transition:color .25s}
+.nav-back:hover{color:var(--gold)}
+.nav-back svg{transition:transform .2s}
+.nav-back:hover svg{transform:translateX(-3px)}
+
+/* HEADER */
+.shop-header{padding:140px 60px 60px;text-align:center;border-bottom:1px solid rgba(201,168,76,0.1)}
+.shop-badge{display:inline-block;font-size:10px;font-weight:500;letter-spacing:.25em;text-transform:uppercase;color:var(--gold);border:1px solid rgba(201,168,76,0.35);padding:7px 20px;border-radius:100px;margin-bottom:28px}
+.shop-title{font-family:var(--serif);font-size:clamp(44px,8vw,90px);font-weight:300;line-height:.95;letter-spacing:.02em;margin-bottom:12px}
+.shop-title em{color:var(--gold);font-style:italic}
+.shop-subtitle{font-size:14px;font-weight:300;color:rgba(245,240,232,0.45);letter-spacing:.04em}
+
+/* FILTROS */
+.filters{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;padding:40px 60px 0}
+.filt{font-size:11px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:rgba(245,240,232,0.45);border:1px solid rgba(201,168,76,0.15);padding:9px 20px;border-radius:2px;cursor:pointer;background:none;transition:color .2s,border-color .2s,background .2s}
+.filt:hover,.filt.active{color:var(--black);background:var(--gold);border-color:var(--gold)}
+
+/* GRID */
+.shop-grid-wrap{padding:40px 60px 100px;max-width:1400px;margin:0 auto}
+.shop-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+
+/* TARJETA */
+.pcard{background:var(--black2);border:1px solid rgba(201,168,76,0.1);border-radius:4px;overflow:hidden;transition:transform .3s,border-color .3s,box-shadow .3s;display:flex;flex-direction:column}
+.pcard:hover{transform:translateY(-6px);border-color:rgba(201,168,76,0.32);box-shadow:0 20px 50px rgba(0,0,0,0.5),0 0 28px rgba(201,168,76,0.05)}
+.pcard[data-hidden="true"]{display:none}
+
+.pimg{height:240px;background:var(--black3);position:relative;overflow:hidden;flex-shrink:0}
+.pimg-glow{position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(201,168,76,0.09) 0%,transparent 65%);pointer-events:none}
+.pimg img{width:100%;height:100%;object-fit:cover;transition:transform .4s ease;display:block}
+.pcard:hover .pimg img{transform:scale(1.05)}
+.pimg-placeholder{width:100%;height:100%;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:10px;color:rgba(201,168,76,0.2)}
+.pimg-placeholder svg{width:40px;height:40px}
+.pimg-placeholder span{font-size:9px;letter-spacing:.15em;text-transform:uppercase}
+
+.pbody{padding:22px 20px 20px;display:flex;flex-direction:column;flex:1}
+.pcat{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:8px;opacity:.7}
+.pname{font-family:var(--serif);font-size:18px;font-weight:400;color:var(--white);margin-bottom:8px;line-height:1.3;flex:1}
+.pdesc{font-size:12px;color:rgba(245,240,232,0.38);line-height:1.7;margin-bottom:18px}
+.pfooter{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:auto}
+.pprice{font-family:var(--serif);font-size:24px;font-weight:300;color:var(--gold);white-space:nowrap}
+.pbtn{font-size:10px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--black);background:var(--gold);padding:10px 18px;border-radius:2px;border:none;cursor:pointer;transition:background .2s,transform .15s;white-space:nowrap;flex-shrink:0}
+.pbtn:hover{background:var(--gold2);transform:translateY(-1px)}
+
+/* MODAL PAGO */
+.modal-overlay{position:fixed;inset:0;z-index:9000;background:rgba(0,0,0,0.8);backdrop-filter:blur(8px);display:none;align-items:center;justify-content:center;padding:20px}
+.modal-overlay.open{display:flex;animation:fadeIn .25s ease}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+
+.modal-box{background:var(--black2);border:1px solid rgba(201,168,76,0.18);border-radius:8px;width:100%;max-width:480px;position:relative;animation:slideUp .3s cubic-bezier(.22,1,.36,1)}
+@keyframes slideUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+
+.modal-close{position:absolute;top:16px;right:16px;width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,0.05);border:1px solid rgba(201,168,76,0.15);color:rgba(245,240,232,0.4);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s,color .2s}
+.modal-close:hover{background:rgba(201,168,76,0.12);color:var(--gold)}
+
+.modal-inner{padding:36px 32px 32px}
+.modal-tag{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:10px;opacity:.7}
+.modal-product{font-family:var(--serif);font-size:22px;font-weight:400;color:var(--white);margin-bottom:4px;line-height:1.2}
+.modal-price{font-family:var(--serif);font-size:32px;font-weight:300;color:var(--gold);margin-bottom:28px}
+
+.modal-steps{display:flex;flex-direction:column;gap:16px;margin-bottom:28px}
+.mstep{display:flex;gap:14px;align-items:flex-start}
+.mstep-num{width:26px;height:26px;min-width:26px;border-radius:50%;background:rgba(201,168,76,0.12);border:1px solid rgba(201,168,76,0.25);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--gold);font-family:var(--sans)}
+.mstep-body{}
+.mstep-label{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:rgba(245,240,232,0.35);margin-bottom:4px}
+.mstep-val{font-size:14px;color:var(--white);line-height:1.5}
+.mstep-val strong{color:var(--gold)}
+
+.modal-divider{height:1px;background:rgba(201,168,76,0.1);margin:0 0 24px}
+
+.modal-actions{display:flex;flex-direction:column;gap:10px}
+.btn-wa{display:flex;align-items:center;justify-content:center;gap:10px;background:#25D366;color:#fff;font-size:13px;font-weight:600;letter-spacing:.05em;padding:15px 24px;border-radius:4px;text-decoration:none;transition:background .2s,transform .15s}
+.btn-wa:hover{background:#1ebe5d;transform:translateY(-1px)}
+.btn-wa svg{width:18px;height:18px;fill:#fff;flex-shrink:0}
+.modal-note{font-size:11px;color:rgba(245,240,232,0.3);text-align:center;line-height:1.6}
+
+/* FOOTER */
+.shop-footer{background:var(--black2);border-top:1px solid rgba(201,168,76,0.1);padding:28px 60px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px}
+.sf-logo{font-family:var(--serif);font-size:18px;font-weight:600;color:var(--gold)}
+.sf-logo span{color:rgba(245,240,232,0.4);font-weight:300}
+.sf-copy{font-size:11px;color:rgba(245,240,232,0.2)}
+.sf-link{font-size:11px;color:rgba(245,240,232,0.28);text-decoration:none;letter-spacing:.08em;text-transform:uppercase;transition:color .2s}
+.sf-link:hover{color:var(--gold)}
+
+/* WAB */
+.wfab{position:fixed;bottom:28px;right:28px;z-index:200;width:54px;height:54px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(37,211,102,0.4);text-decoration:none;transition:transform .25s,box-shadow .25s}
+.wfab:hover{transform:scale(1.1);box-shadow:0 6px 28px rgba(37,211,102,0.55)}
+
+/* RESPONSIVE */
+@media(max-width:1100px){.shop-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:768px){
+  nav{padding:14px 20px}nav.scrolled{padding:12px 20px}
+  .shop-header{padding:110px 24px 48px}
+  .filters{padding:28px 24px 0;gap:8px}
+  .filt{font-size:10px;padding:7px 14px}
+  .shop-grid-wrap{padding:28px 24px 80px}
+  .shop-grid{grid-template-columns:1fr;gap:16px}
+  .shop-footer{padding:24px 24px;flex-direction:column;text-align:center;gap:10px}
+  .modal-inner{padding:28px 20px 24px}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="mainNav">
+  <a href="index.html" class="nav-logo">
+    <img src="assets/luanda-logo.png" alt="Luanda" onerror="this.style.display='none';this.nextElementSibling.style.display='inline'">
+    <span class="nav-logo-text">LUANDA <span>SHOP</span></span>
+  </a>
+  <a href="index.html" class="nav-back">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+    Volver al inicio
+  </a>
+</nav>
+
+<!-- HEADER -->
+<div class="shop-header">
+  <div class="shop-badge">Peluquería &amp; Belleza · Alfafar, Valencia</div>
+  <h1 class="shop-title">Productos de <em>peluquería</em></h1>
+  <p class="shop-subtitle">Marcas profesionales · Envíos a toda España</p>
+</div>
+
+<!-- FILTROS -->
+<div class="filters">
+  <button class="filt active" data-cat="todos">Todos</button>
+  <button class="filt" data-cat="Champús">Champús</button>
+  <button class="filt" data-cat="Mascarillas">Mascarillas</button>
+  <button class="filt" data-cat="Serums">Serums</button>
+  <button class="filt" data-cat="Styling">Styling</button>
+  <button class="filt" data-cat="Rizos">Rizos</button>
+  <button class="filt" data-cat="Herramientas">Herramientas</button>
+  <button class="filt" data-cat="Suplementos">Suplementos</button>
+  <button class="filt" data-cat="Bronceado">Bronceado</button>
+</div>
+
+<!-- GRID -->
+<div class="shop-grid-wrap">
+  <div class="shop-grid" id="shopGrid">
+
+    <!-- 01 -->
+    <div class="pcard" data-cat="Herramientas">
+      <div class="pimg">
+        <img src="assets/peines-maquina.jpg" alt="Set Peines Máquina"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="pimg-placeholder" style="display:none">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+          <span>Añadir foto</span>
+        </div>
+        <div class="pimg-glow"></div>
+      </div>
+      <div class="pbody">
+        <div class="pcat">Herramientas</div>
+        <div class="pname">Set 8 piezas para máquina de afeitar</div>
+        <div class="pdesc">Juego completo de peines guía compatibles con la mayoría de máquinas profesionales.</div>
+        <div class="pfooter">
+          <div class="pprice">10 €</div>
+          <button class="pbtn" onclick="openModal('Set 8 piezas para máquina de afeitar','10')">Comprar</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 02 -->
+    <div class="pcard" data-cat="Champús">
+      <div class="pimg">
+        <img src="assets/champu-fanola-nourishing.jpg" alt="Champú Fanola Nourishing"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="pimg-placeholder" style="display:none">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+          <span>Añadir foto</span>
+        </div>
+        <div class="pimg-glow"></div>
+      </div>
+      <div class="pbody">
+        <div class="pcat">Champús</div>
+        <div class="pname">Champú Fanola Nourishing 350 ml</div>
+        <div class="pdesc">Champú reestructurante para cabello seco y dañado. Con proteínas de leche que nutren y suavizan.</div>
+        <div class="pfooter">
+          <div class="pprice">22 €</div>
+          <button class="pbtn" onclick="openModal('Champú Fanola Nourishing 350 ml','22')">Comprar</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 03 -->
+    <div class="pcard" data-cat="Mascarillas">
+      <div class="pimg">
+        <img src="assets/mascarilla-fanola-nourishing.jpg" alt="Mascarilla Fanola Nourishing"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="pimg-placeholder" style="display:none">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+          <span>Añadir foto</span>
+        </div>
+        <div class="pimg-glow"></div>
+      </div>
+      <div class="pbody">
+        <div class="pcat">Mascarillas</div>
+        <div class="pname">Mascarilla Reestructurante Fanola Nourishing 500 ml</div>
+        <div class="pdesc">Para cabello seco y dañado. Nutre, desenreda y suaviza. Aplicar de medios a puntas 3-5 min.</div>
+        <div class="pfooter">
+          <div class="pprice">24 €</div>
+          <button class="pbtn" onclick="openModal('Mascarilla Fanola Nourishing 500 ml','24')">Comprar</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 04 -->
+    <div class="pcard" data-cat="Champús">
+      <div class="pimg">
+        <img src="assets/champu-fanola-no-yellow.jpg" alt="Champú Fanola No Yellow"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="pimg-placeholder" style="display:none">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+          <span>Añadir foto</span>
+        </div>
+        <div class="pimg-glow"></div>
+      </div>
+      <div class="pbody">
+        <div class="pcat">Champús</div>
+        <div class="pname">Champú Fanola No Yellow 350 ml</div>
+        <div class="pdesc">Anti-amarilleo para pelo rubio o gris con canas. Proporciona aspecto plateado brillante. Con proteínas de seda.</div>
+        <div class="pfooter">
+          <div class="pprice">22 €</div>
+          <button class="pbtn" onclick="openModal('Champú Fanola No Yellow 350 ml','22')">Comprar</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 05 -->
+    <div class="pcard" data-cat="Suplementos">
+      <div class="pimg">
+        <img src="assets/gummy-glow-biotin.jpg" alt="Gummy Glow Biotin"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="pimg-placeholder" style="display:none">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+          <span>Añadir foto</span>
+        </div>
+        <div class="pimg-glow"></div>
+      </div>
+      <div class="pbody">
+        <div class="pcat">Suplementos</div>
+        <div class="pname">Gummy Glow Biotin — ESSENS Spain</div>
+        <div class="pdesc">Complemento alimenticio con Biotina (Vitamina B7) para uñas, piel y cabello. Línea Must Have Edition.</div>
+        <div class="pfooter">
+          <div class="pprice">35 €</div>
+          <button class="pbtn" onclick="openModal('Gummy Glow Biotin ESSENS','35')">Comprar</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 06 -->
+    <div class="pcard" data-cat="Styling">
+      <div class="pimg">
+        <img src="assets/spray-perfect-volumen.jpg" alt="Spray Perfect Volumen"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="pimg-placeholder" style="display:none">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+          <span>Añadir foto</span>
+        </div>
+        <div class="pimg-glow"></div>
+      </div>
+      <div class="pbody">
+        <div class="pcat">Styling</div>
+        <div class="pname">Spray Perfect Volumen — Glossco</div>
+        <div class="pdesc">Volumen, suavidad y brillo. No apelmaza.</div>
+        <div class="pfooter">
+          <div class="pprice">18 €</div>
+          <button class="pbtn" onclick="openModal('Spray Perfect Volumen Glossco','18')">Comprar</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 07 -->
+    <div class="pcard" data-cat="Styling">
+      <div class="pimg">
+        <img src="assets/uniq-one.jpg" alt="Uniq ONE 10"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="pimg-placeholder" style="display:none">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+          <span>Añadir foto</span>
+        </div>
+        <div class="pimg-glow"></div>
+      </div>
+      <div class="pbody">
+        <div class="pcat">Styling</div>
+        <div class="pname">Uniq ONE 10 — Revlon</div>
+        <div class="pdesc">10 beneficios en 1: repara, previene puntas abiertas, controla el frizz, fortalece y protección térmica.</div>
+        <div class="pfooter">
+          <div class="pprice">28 €</div>
+          <button class="pbtn" onclick="openModal('Uniq ONE 10 Revlon','28')">Comprar</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 08 -->
+    <div class="pcard" data-cat="Rizos">
+      <div class="pimg">
+        <img src="assets/crema-rizos-glossco.jpg" alt="Crema Rizos Glossco Waves Curls"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="pimg-placeholder" style="display:none">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+          <span>Añadir foto</span>
+        </div>
+        <div class="pimg-glow"></div>
+      </div>
+      <div class="pbody">
+        <div class="pcat">Rizos</div>
+        <div class="pname">Crema Rizos Glossco Waves &amp; Curls Plus</div>
+        <div class="pdesc">Nutrición, protección térmica y control del frizz para rizos definidos.</div>
+        <div class="pfooter">
+          <div class="pprice">18 €</div>
+          <button class="pbtn" onclick="openModal('Crema Rizos Glossco Waves &amp; Curls Plus','18')">Comprar</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 09 -->
+    <div class="pcard" data-cat="Rizos">
+      <div class="pimg">
+        <img src="assets/espuma-curly.jpg" alt="Espuma Curly Rizos"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="pimg-placeholder" style="display:none">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+          <span>Añadir foto</span>
+        </div>
+        <div class="pimg-glow"></div>
+      </div>
+      <div class="pbody">
+        <div class="pcat">Rizos</div>
+        <div class="pname">Espuma Curl Special — Glossco</div>
+        <div class="pdesc">Aporta luminosidad y efecto anti-frizz para rizos perfectos con definición duradera.</div>
+        <div class="pfooter">
+          <div class="pprice">20,80 €</div>
+          <button class="pbtn" onclick="openModal('Espuma Curl Special Glossco','20.80')">Comprar</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 10 -->
+    <div class="pcard" data-cat="Styling">
+      <div class="pimg">
+        <img src="assets/bi-phase-smoothie.jpg" alt="BI PHASE Smoothie"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="pimg-placeholder" style="display:none">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+          <span>Añadir foto</span>
+        </div>
+        <div class="pimg-glow"></div>
+      </div>
+      <div class="pbody">
+        <div class="pcat">Styling</div>
+        <div class="pname">BI PHASE Smoothie — Glossco</div>
+        <div class="pdesc">Acondicionador desenredante instantáneo con proteínas de avena, soja y trigo.</div>
+        <div class="pfooter">
+          <div class="pprice">18 €</div>
+          <button class="pbtn" onclick="openModal('BI PHASE Smoothie Glossco','18')">Comprar</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 11 -->
+    <div class="pcard" data-cat="Champús">
+      <div class="pimg">
+        <img src="assets/champu-granada.jpg" alt="Champú Granada 1000ml"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="pimg-placeholder" style="display:none">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+          <span>Añadir foto</span>
+        </div>
+        <div class="pimg-glow"></div>
+      </div>
+      <div class="pbody">
+        <div class="pcat">Champús</div>
+        <div class="pname">Champú Antioxidante Granada 1000 ml</div>
+        <div class="pdesc">Acción antioxidante con extracto de granada. Protege y nutre el cabello.</div>
+        <div class="pfooter">
+          <div class="pprice">19,50 €</div>
+          <button class="pbtn" onclick="openModal('Champú Antioxidante Granada 1000 ml','19.50')">Comprar</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 12 -->
+    <div class="pcard" data-cat="Mascarillas">
+      <div class="pimg">
+        <img src="assets/mascarilla-granada.jpg" alt="Mascarilla Granada 1000ml"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="pimg-placeholder" style="display:none">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+          <span>Añadir foto</span>
+        </div>
+        <div class="pimg-glow"></div>
+      </div>
+      <div class="pbody">
+        <div class="pcat">Mascarillas</div>
+        <div class="pname">Mascarilla Granada 1000 ml</div>
+        <div class="pdesc">Protege y nutre el cabello con extracto de granada. Tamaño profesional.</div>
+        <div class="pfooter">
+          <div class="pprice">25,75 €</div>
+          <button class="pbtn" onclick="openModal('Mascarilla Granada 1000 ml','25.75')">Comprar</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 13 -->
+    <div class="pcard" data-cat="Serums">
+      <div class="pimg">
+        <img src="assets/serum-fanola.jpg" alt="Serum Fanola Nourishing"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="pimg-placeholder" style="display:none">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+          <span>Añadir foto</span>
+        </div>
+        <div class="pimg-glow"></div>
+      </div>
+      <div class="pbody">
+        <div class="pcat">Serums</div>
+        <div class="pname">Serum Restructurante Fanola 100 ml</div>
+        <div class="pdesc">Para cabello seco y puntas estropeadas. Aporta brillo y suavidad inmediata.</div>
+        <div class="pfooter">
+          <div class="pprice">22 €</div>
+          <button class="pbtn" onclick="openModal('Serum Restructurante Fanola 100 ml','22')">Comprar</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 14 -->
+    <div class="pcard" data-cat="Serums">
+      <div class="pimg">
+        <img src="assets/serum-cristal-repair.jpg" alt="Serum Crystal Repair Glossco"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="pimg-placeholder" style="display:none">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+          <span>Añadir foto</span>
+        </div>
+        <div class="pimg-glow"></div>
+      </div>
+      <div class="pbody">
+        <div class="pcat">Serums</div>
+        <div class="pname">Serum Crystal Repair — Glossco</div>
+        <div class="pdesc">Acción anti-rotura, anti-frizz y brillo. Con aceite de argán.</div>
+        <div class="pfooter">
+          <div class="pprice">22 €</div>
+          <button class="pbtn" onclick="openModal('Serum Crystal Repair Glossco','22')">Comprar</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 15 -->
+    <div class="pcard" data-cat="Champús">
+      <div class="pimg">
+        <img src="assets/champu-liheto.jpg" alt="Champú Sin Sal Liheto"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="pimg-placeholder" style="display:none">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+          <span>Añadir foto</span>
+        </div>
+        <div class="pimg-glow"></div>
+      </div>
+      <div class="pbody">
+        <div class="pcat">Champús</div>
+        <div class="pname">Champú Sin Sal Liheto 500 ml</div>
+        <div class="pdesc">Disponible en limón, fresa, chocolate y sandía. Línea Funny — sin sulfatos.</div>
+        <div class="pfooter">
+          <div class="pprice">20 €</div>
+          <button class="pbtn" onclick="openModal('Champú Sin Sal Liheto 500 ml','20')">Comprar</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 16 -->
+    <div class="pcard" data-cat="Herramientas">
+      <div class="pimg">
+        <img src="assets/plancha-titanium.jpg" alt="Plancha Titanium AGV"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="pimg-placeholder" style="display:none">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+          <span>Añadir foto</span>
+        </div>
+        <div class="pimg-glow"></div>
+      </div>
+      <div class="pbody">
+        <div class="pcat">Herramientas</div>
+        <div class="pname">Plancha Titanium a.g.v Inspire Profesional</div>
+        <div class="pdesc">100% Titanio. Temperatura regulable de 120 a 230 °C.</div>
+        <div class="pfooter">
+          <div class="pprice">60 €</div>
+          <button class="pbtn" onclick="openModal('Plancha Titanium a.g.v Inspire','60')">Comprar</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 17 -->
+    <div class="pcard" data-cat="Herramientas">
+      <div class="pimg">
+        <img src="assets/cepillo-madera.jpg" alt="Cepillo Pala Madera"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="pimg-placeholder" style="display:none">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+          <span>Añadir foto</span>
+        </div>
+        <div class="pimg-glow"></div>
+      </div>
+      <div class="pbody">
+        <div class="pcat">Herramientas</div>
+        <div class="pname">Cepillo Pala de Madera</div>
+        <div class="pdesc">Cuida y no rompe el cabello. Mango ergonómico de madera natural.</div>
+        <div class="pfooter">
+          <div class="pprice">12 €</div>
+          <button class="pbtn" onclick="openModal('Cepillo Pala de Madera','12')">Comprar</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 18 -->
+    <div class="pcard" data-cat="Herramientas">
+      <div class="pimg">
+        <img src="assets/rizador-tres-barriles.jpg" alt="Rizador Tres Barriles"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="pimg-placeholder" style="display:none">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+          <span>Añadir foto</span>
+        </div>
+        <div class="pimg-glow"></div>
+      </div>
+      <div class="pbody">
+        <div class="pcat">Herramientas</div>
+        <div class="pname">Rizador Ceramic Curling Iron — 3 barriles</div>
+        <div class="pdesc">Temperatura ajustable 180–210 °C. Diseñado para ondas estilo sirena o playa.</div>
+        <div class="pfooter">
+          <div class="pprice">35,99 €</div>
+          <button class="pbtn" onclick="openModal('Rizador Ceramic Curling Iron 3 barriles','35.99')">Comprar</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 19 -->
+    <div class="pcard" data-cat="Bronceado">
+      <div class="pimg">
+        <img src="assets/activador-melanina.jpg" alt="Activador Melanina Diet Esthetic"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="pimg-placeholder" style="display:none">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+          <span>Añadir foto</span>
+        </div>
+        <div class="pimg-glow"></div>
+      </div>
+      <div class="pbody">
+        <div class="pcat">Bronceado</div>
+        <div class="pname">Activador de Melanina — Diet Esthetic</div>
+        <div class="pdesc">Diseñado para acelerar el proceso de bronceado natural.</div>
+        <div class="pfooter">
+          <div class="pprice">21 €</div>
+          <button class="pbtn" onclick="openModal('Activador de Melanina Diet Esthetic','21')">Comprar</button>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /shop-grid -->
+</div><!-- /shop-grid-wrap -->
+
+<!-- FOOTER -->
+<footer class="shop-footer">
+  <div class="sf-logo">LUANDA <span>SHOP</span></div>
+  <span class="sf-copy">© 2026 Luanda Shop · Alfafar, Valencia</span>
+  <a href="index.html" class="sf-link">← Volver al inicio</a>
+</footer>
+
+<!-- WAB -->
+<a href="https://wa.me/34610898948" target="_blank" class="wfab" title="WhatsApp">
+  <svg viewBox="0 0 24 24" width="26" height="26" fill="#fff"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+</a>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="payModal" onclick="if(event.target===this)closeModal()">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="modal-inner">
+      <div class="modal-tag">Tu pedido</div>
+      <div class="modal-product" id="modalProductName"></div>
+      <div class="modal-price" id="modalProductPrice"></div>
+
+      <div class="modal-steps">
+        <div class="mstep">
+          <div class="mstep-num">1</div>
+          <div class="mstep-body">
+            <div class="mstep-label">Realizá la transferencia a</div>
+            <div class="mstep-val">
+              Titular: <strong>[NOMBRE TITULAR]</strong><br>
+              IBAN: <strong>[ES00 0000 0000 0000 0000 0000]</strong><br>
+              Banco: <strong>[NOMBRE DEL BANCO]</strong>
+            </div>
+          </div>
+        </div>
+        <div class="mstep">
+          <div class="mstep-num">2</div>
+          <div class="mstep-body">
+            <div class="mstep-label">Concepto de la transferencia</div>
+            <div class="mstep-val" id="modalConcept"></div>
+          </div>
+        </div>
+        <div class="mstep">
+          <div class="mstep-num">3</div>
+          <div class="mstep-body">
+            <div class="mstep-label">Confirmá tu compra</div>
+            <div class="mstep-val">Envianos el comprobante por WhatsApp y te confirmamos el pedido.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-divider"></div>
+      <div class="modal-actions">
+        <a id="modalWaBtn" href="#" target="_blank" class="btn-wa">
+          <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+          Enviar comprobante por WhatsApp
+        </a>
+        <p class="modal-note">Una vez recibida la transferencia confirmamos tu pedido y coordinamos la entrega.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* NAV scroll */
+const nav = document.getElementById('mainNav');
+window.addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 40));
+
+/* FILTROS */
+document.querySelectorAll('.filt').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filt').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const cat = btn.dataset.cat;
+    document.querySelectorAll('.pcard').forEach(card => {
+      card.dataset.hidden = (cat !== 'todos' && card.dataset.cat !== cat) ? 'true' : 'false';
+    });
+  });
+});
+
+/* MODAL */
+function openModal(name, price) {
+  document.getElementById('modalProductName').textContent = name;
+  document.getElementById('modalProductPrice').textContent = parseFloat(price).toFixed(2).replace('.',',') + ' €';
+  const concept = 'Luanda - ' + name;
+  document.getElementById('modalConcept').innerHTML = '<strong>' + concept + '</strong>';
+  const msg = encodeURIComponent('Hola! Acabo de hacer la transferencia por el producto: ' + name + ' (' + parseFloat(price).toFixed(2).replace('.',',') + ' €). Adjunto el comprobante.');
+  document.getElementById('modalWaBtn').href = 'https://wa.me/34610898948?text=' + msg;
+  document.getElementById('payModal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeModal() {
+  document.getElementById('payModal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+</script>
+</body>
+</html>
