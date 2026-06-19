@@ -922,7 +922,7 @@ document.querySelectorAll('.filt').forEach(btn => {
     btn.classList.add('active');
     const cat = btn.dataset.cat;
     document.querySelectorAll('.pcard').forEach(card => {
-      card.dataset.hidden = (cat !== 'todos' && card.dataset.cat !== cat) ? 'true' : 'false';
+      card.dataset.hidden = (cat !== 'todos' && !card.dataset.cat.split(' ').includes(cat)) ? 'true' : 'false';
     });
   });
 });
