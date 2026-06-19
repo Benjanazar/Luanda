@@ -943,6 +943,19 @@ function closeModal() {
   document.body.style.overflow = '';
 }
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+/* CAROUSEL BELLEZA */
+function cNav(wrap,dir){
+  var imgs=wrap.querySelectorAll('.carousel-img'),dots=wrap.querySelectorAll('.c-dot');
+  var n=(parseInt(wrap.dataset.c||0)+dir+imgs.length)%imgs.length;
+  wrap.dataset.c=n;
+  imgs.forEach(function(img,i){img.style.opacity=i===n?'1':'0'});
+  dots.forEach(function(d,i){d.classList.toggle('on',i===n)});
+}
+function cGo(dot,idx){
+  var wrap=dot.closest('.carousel-wrap');
+  cNav(wrap,idx-parseInt(wrap.dataset.c||0));
+}
 </script>
 </body>
 </html>
