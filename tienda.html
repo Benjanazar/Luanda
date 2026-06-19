@@ -143,6 +143,19 @@ nav.scrolled{background:rgba(8,8,8,0.94);backdrop-filter:blur(18px);padding:13px
   .pimg{height:200px}
   .pdesc{display:block}
 }
+/* CAROUSEL */
+.carousel-wrap{position:relative;width:100%;height:100%}
+.carousel-img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;padding:16px;transition:opacity .35s ease;display:block}
+.c-prev,.c-next{position:absolute;top:50%;transform:translateY(-50%);z-index:5;width:30px;height:30px;background:rgba(0,0,0,0.52);border:1px solid rgba(201,168,76,0.25);color:var(--gold);border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:18px;line-height:1;padding:0;transition:background .2s}
+.c-prev:hover,.c-next:hover{background:rgba(201,168,76,0.18)}
+.c-prev{left:6px}.c-next{right:6px}
+.c-dots{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);display:flex;gap:5px;z-index:5}
+.c-dot{width:6px;height:6px;border-radius:50%;background:rgba(201,168,76,0.3);border:none;cursor:pointer;padding:0;transition:background .2s}
+.c-dot.on{background:var(--gold)}
+/* SEPARADOR SECCIÓN */
+.section-sep{grid-column:1/-1;display:flex;align-items:center;gap:18px;padding:28px 0 6px}
+.section-sep-line{flex:1;height:1px;background:rgba(201,168,76,0.12)}
+.section-sep-label{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);white-space:nowrap;opacity:.75}
 </style>
 </head>
 <body>
