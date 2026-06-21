@@ -1066,24 +1066,28 @@ nav.scrolled{background:rgba(8,8,8,0.94);backdrop-filter:blur(18px);padding:13px
       </div>
     </div>
 
-    <!-- Gel Metallica NB 001 -->
+    <!-- Gel Metallica NB — CARRUSEL 2 colores -->
     <div class="pcard" data-cat="Uñas">
       <div class="pimg">
-        <img src="assets/gel-metallica-nb-001.jpeg" alt="Gel Metallica NB 001"
-             onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-        <div class="pimg-placeholder" style="display:none">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
-          <span>Añadir foto</span>
+        <div class="carousel-wrap" data-c="0">
+          <img class="carousel-img" src="assets/gel-metallica-nb-001.jpeg" alt="Gel Metallica NB 001" style="opacity:1">
+          <img class="carousel-img" src="assets/gel-metallica-nb-002.jpeg" alt="Gel Metallica NB 002" style="opacity:0">
+          <button class="c-prev" onclick="cNav(this.closest('.carousel-wrap'),-1)">&#8249;</button>
+          <button class="c-next" onclick="cNav(this.closest('.carousel-wrap'),1)">&#8250;</button>
+          <div class="c-dots">
+            <button class="c-dot on" onclick="cGo(this,0)"></button>
+            <button class="c-dot" onclick="cGo(this,1)"></button>
+          </div>
         </div>
         <div class="pimg-glow"></div>
       </div>
       <div class="pbody">
         <div class="pcat">Uñas · Gel Color</div>
-        <div class="pname">Gel Metallica NB — Color 001</div>
-        <div class="pdesc">Esmalte gel de efecto metálico. Cura con lámpara UV/LED para acabado de alta duración.</div>
+        <div class="pname">Gel Metallica NB — 2 colores</div>
+        <div class="pdesc">Esmalte gel de efecto metálico. Disponible en dorado (001) y plateado (002). Cura con lámpara UV/LED.</div>
         <div class="pfooter">
           <div class="pprice">6 €</div>
-          <button class="pbtn" onclick="openModal('Gel Metallica NB 001','6')">Comprar</button>
+          <button class="pbtn" onclick="openCarouselModal(this,'6')">Comprar</button>
         </div>
       </div>
     </div>
