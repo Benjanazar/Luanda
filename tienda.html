@@ -956,6 +956,13 @@ function cGo(dot,idx){
   var wrap=dot.closest('.carousel-wrap');
   cNav(wrap,idx-parseInt(wrap.dataset.c||0));
 }
+function openCarouselModal(btn,price){
+  var wrap=btn.closest('.pcard').querySelector('.carousel-wrap');
+  var idx=parseInt(wrap.dataset.c||0);
+  var variants=wrap.querySelectorAll('.carousel-img');
+  var name=variants[idx].alt;
+  openModal(name,price);
+}
 </script>
 </body>
 </html>
