@@ -2441,10 +2441,6 @@ function openModal(name, price) {
   document.getElementById('modalProductName').textContent = name;
   document.getElementById('modalProductPrice').textContent = p > 0 ? p.toFixed(2).replace('.',',') + ' €' : '— €';
   document.getElementById('modalRawPrice').value = p;
-  const concept = 'Luanda - ' + name;
-  document.getElementById('modalConcept').innerHTML = '<strong>' + concept + '</strong>';
-  const msg = encodeURIComponent('Hola! Acabo de hacer la transferencia por el producto: ' + name + (p > 0 ? ' (' + p.toFixed(2).replace('.',',') + ' €)' : '') + '. Adjunto el comprobante.');
-  document.getElementById('modalWaBtn').href = 'https://wa.me/34610898948?text=' + msg;
   document.querySelector('.btn-pay').style.display = p > 0 ? '' : 'none';
   document.getElementById('payModal').classList.add('open');
   document.body.style.overflow = 'hidden';
