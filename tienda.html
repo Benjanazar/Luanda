@@ -2472,26 +2472,114 @@ document.querySelectorAll('.filt').forEach(btn => {
   });
 });
 
-/* MODAL */
-function openModal(name, price) {
-  const p = parseFloat(price) || 0;
-  document.getElementById('modalProductName').textContent = name;
-  document.getElementById('modalProductPrice').textContent = p > 0 ? p.toFixed(2).replace('.',',') + ' €' : '— €';
-  document.getElementById('modalRawPrice').value = p;
-  document.querySelector('.btn-pay').style.display = p > 0 ? '' : 'none';
-  document.getElementById('payModal').classList.add('open');
+/* CARRITO */
+let cart = JSON.parse(localStorage.getItem('luanda_cart') || '[]');
+
+function saveCart() { localStorage.setItem('luanda_cart', JSON.stringify(cart)); }
+
+function addToCart(name, price) {
+  const p = parseFloat(price);
+  if (isNaN(p) || p <= 0) {
+    window.open('https://wa.me/34610898948?text=' + encodeURIComponent('Hola! Me interesa ' + name + '. ¿Podéis decirme el precio?'), '_blank');
+    return;
+  }
+  const idx = cart.findIndex(i => i.name === name);
+  if (idx >= 0) cart[idx].qty++;
+  else cart.push({ name, price: p, qty: 1 });
+  saveCart();
+  syncCartUI();
+  showToast();
+  openCart();
+}
+
+function addCarouselToCart(btn, price) {
+  const wrap = btn.closest('.pcard').querySelector('.carousel-wrap');
+  const n = parseInt(wrap.dataset.c || 0);
+  const name = wrap.querySelectorAll('.carousel-img')[n].alt;
+  addToCart(name, price);
+}
+
+function removeFromCart(idx) {
+  cart.splice(idx, 1);
+  saveCart();
+  syncCartUI();
+  renderCart();
+}
+
+function changeQty(idx, delta) {
+  cart[idx].qty = Math.max(1, cart[idx].qty + delta);
+  saveCart();
+  syncCartUI();
+  renderCart();
+}
+
+function cartTotal() { return cart.reduce((s, i) => s + i.price * i.qty, 0); }
+
+function syncCartUI() {
+  const count = cart.reduce((s, i) => s + i.qty, 0);
+  const badge = document.getElementById('cartBadge');
+  badge.textContent = count;
+  badge.classList.toggle('vis', count > 0);
+}
+
+function renderCart() {
+  const body = document.getElementById('cartBody');
+  const foot = document.getElementById('cartFoot');
+  if (cart.length === 0) {
+    body.innerHTML = '<p class="cart-empty-msg">Tu carrito está vacío</p>';
+    foot.style.display = 'none';
+    return;
+  }
+  foot.style.display = '';
+  body.innerHTML = cart.map((item, i) => `
+    <div class="cart-item">
+      <div class="cart-item-name">${item.name}</div>
+      <div class="cart-item-controls">
+        <div class="cart-qty-wrap">
+          <button onclick="changeQty(${i},-1)">−</button>
+          <span>${item.qty}</span>
+          <button onclick="changeQty(${i},1)">+</button>
+        </div>
+        <div class="cart-item-subtotal">${(item.price * item.qty).toFixed(2).replace('.',',')} €</div>
+        <button class="cart-rm" onclick="removeFromCart(${i})" title="Eliminar">✕</button>
+      </div>
+    </div>
+  `).join('');
+  document.getElementById('cartTotalAmt').textContent = cartTotal().toFixed(2).replace('.',',') + ' €';
+}
+
+function openCart() {
+  renderCart();
+  document.getElementById('cartDrawer').classList.add('open');
+  document.getElementById('cartOverlay').classList.add('open');
   document.body.style.overflow = 'hidden';
 }
-function pagarOnline() {
-  const name  = document.getElementById('modalProductName').textContent;
-  const price = document.getElementById('modalRawPrice').value;
-  window.location.href = '/api/pago?name=' + encodeURIComponent(name) + '&price=' + price;
-}
-function closeModal() {
-  document.getElementById('payModal').classList.remove('open');
+
+function closeCart() {
+  document.getElementById('cartDrawer').classList.remove('open');
+  document.getElementById('cartOverlay').classList.remove('open');
   document.body.style.overflow = '';
 }
-document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+let _toastTimer;
+function showToast() {
+  const t = document.getElementById('cartToast');
+  t.classList.add('show');
+  clearTimeout(_toastTimer);
+  _toastTimer = setTimeout(() => t.classList.remove('show'), 2200);
+}
+
+function checkoutCart() {
+  if (!cart.length) return;
+  const total = cartTotal();
+  const desc = cart.length === 1
+    ? cart[0].name
+    : cart.map(i => i.qty > 1 ? i.qty + 'x ' + i.name : i.name).join(', ');
+  window.location.href = '/api/pago?name=' + encodeURIComponent(desc.substring(0, 125)) + '&price=' + total.toFixed(2);
+}
+
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeCart(); });
+syncCartUI();
 
 /* CAROUSEL BELLEZA */
 function cNav(wrap,dir){
