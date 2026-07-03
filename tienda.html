@@ -3789,40 +3789,46 @@ let cart = JSON.parse(localStorage.getItem('luanda_cart') || '[]');
 
 function saveCart() { localStorage.setItem('luanda_cart', JSON.stringify(cart)); }
 
-/* ── Stock tracking (localStorage por navegador) ── */
-function getSold() { return JSON.parse(localStorage.getItem('luanda_sold') || '{}'); }
-function getStock(name) {
-  const card = [...document.querySelectorAll('.pcard[data-stock]')].find(c => {
-    const btn = c.querySelector('.pbtn');
-    return btn && btn.getAttribute('onclick') && btn.getAttribute('onclick').includes("'" + name + "'");
-  });
-  return card ? parseInt(card.dataset.stock) : Infinity;
+/* ── Stock real desde API ── */
+let _realStock = {};  // { "Nombre producto": unidades_restantes }
+
+async function loadStock() {
+  try {
+    const r = await fetch('/api/stock');
+    _realStock = await r.json();
+  } catch(e) {
+    // fallback: usa data-stock del HTML
+    document.querySelectorAll('.pcard[data-stock]').forEach(card => {
+      const m = card.querySelector('.pbtn')?.getAttribute('onclick')?.match(/addToCart\('([^']+)'/);
+      if (m) _realStock[m[1]] = parseInt(card.dataset.stock);
+    });
+  }
+  updateStockUI();
 }
+
 function remainingStock(name) {
-  const stock = getStock(name);
-  if (!isFinite(stock)) return Infinity;
-  const sold = getSold()[name] || 0;
+  if (!(name in _realStock)) return Infinity;
   const inCart = cart.find(i => i.name === name)?.qty || 0;
-  return Math.max(0, stock - sold - inCart);
+  return Math.max(0, _realStock[name] - inCart);
 }
+
 function updateStockUI() {
-  const sold = getSold();
   document.querySelectorAll('.pcard[data-stock]').forEach(card => {
-    const stock = parseInt(card.dataset.stock);
     const btn = card.querySelector('.pbtn');
     if (!btn) return;
     const m = btn.getAttribute('onclick')?.match(/addToCart\('([^']+)'/);
     if (!m) return;
     const name = m[1];
-    const soldQty = sold[name] || 0;
-    const inCartQty = cart.find(i => i.name === name)?.qty || 0;
-    const rem = stock - soldQty - inCartQty;
+    const rem = remainingStock(name);
     if (rem <= 0) {
       btn.textContent = 'Agotado';
       btn.disabled = true;
       btn.classList.add('pbtn-agotado');
-    } else if (rem <= 3) {
-      btn.title = `Quedan ${rem} unidad${rem === 1 ? '' : 'es'}`;
+    } else {
+      btn.disabled = false;
+      btn.classList.remove('pbtn-agotado');
+      if (btn.textContent === 'Agotado') btn.textContent = 'Añadir al carrito';
+      btn.title = rem <= 5 ? `Quedan ${rem} unidad${rem === 1 ? '' : 'es'}` : '';
     }
   });
 }
