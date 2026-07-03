@@ -2,6 +2,7 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
+<link rel="icon" type="image/jpeg" href="assets/favicon.jpeg">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Pago completado — Luanda Shop</title>
 <style>
@@ -19,5 +20,18 @@ a:hover{background:#e0be6a}
 <h1>¡Pago completado!</h1>
 <p>Tu pedido ha sido recibido correctamente. Te contactaremos por WhatsApp para coordinar la entrega.</p>
 <a href="tienda.html">Seguir comprando</a>
+<script>
+// Registrar ventas en localStorage al completar pago
+try {
+  const pending = JSON.parse(localStorage.getItem('luanda_pending_cart') || '[]');
+  if (pending.length) {
+    const sold = JSON.parse(localStorage.getItem('luanda_sold') || '{}');
+    pending.forEach(item => { sold[item.name] = (sold[item.name] || 0) + item.qty; });
+    localStorage.setItem('luanda_sold', JSON.stringify(sold));
+    localStorage.removeItem('luanda_pending_cart');
+    localStorage.removeItem('luanda_cart');
+  }
+} catch(e) {}
+</script>
 </body>
 </html>
