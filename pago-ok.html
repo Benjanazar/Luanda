@@ -21,17 +21,22 @@ a:hover{background:#e0be6a}
 <p>Tu pedido ha sido recibido correctamente. Te contactaremos por WhatsApp para coordinar la entrega.</p>
 <a href="tienda.html">Seguir comprando</a>
 <script>
-// Registrar ventas en localStorage al completar pago
-try {
-  const pending = JSON.parse(localStorage.getItem('luanda_pending_cart') || '[]');
-  if (pending.length) {
-    const sold = JSON.parse(localStorage.getItem('luanda_sold') || '{}');
-    pending.forEach(item => { sold[item.name] = (sold[item.name] || 0) + item.qty; });
-    localStorage.setItem('luanda_sold', JSON.stringify(sold));
-    localStorage.removeItem('luanda_pending_cart');
-    localStorage.removeItem('luanda_cart');
-  }
-} catch(e) {}
+// Registrar ventas en el servidor y limpiar carrito
+(async () => {
+  try {
+    const pending = JSON.parse(localStorage.getItem('luanda_pending_cart') || '[]');
+    if (pending.length) {
+      const items = pending.map(i => ({ name: i.name, qty: i.qty }));
+      await fetch('/api/stock-buy', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ items })
+      });
+      localStorage.removeItem('luanda_pending_cart');
+      localStorage.removeItem('luanda_cart');
+    }
+  } catch(e) {}
+})();
 </script>
 </body>
 </html>
