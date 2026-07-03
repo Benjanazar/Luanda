@@ -3839,13 +3839,22 @@ function addToCart(name, price) {
     window.open('https://wa.me/34610898948?text=' + encodeURIComponent('Hola! Me interesa ' + name + '. ¿Podéis decirme el precio?'), '_blank');
     return;
   }
-  if (remainingStock(name) <= 0) {
+  const rem = remainingStock(name);
+  if (rem <= 0) {
     alert('Lo sentimos, este producto está agotado.');
     return;
   }
   const idx = cart.findIndex(i => i.name === name);
-  if (idx >= 0) cart[idx].qty++;
-  else cart.push({ name, price: p, qty: 1 });
+  if (idx >= 0) {
+    if (idx >= 0 && idx < cart.length) {
+      const inCart = cart[idx].qty;
+      if (inCart >= rem) {
+        alert(`Solo quedan ${rem} unidad${rem === 1 ? '' : 'es'} disponibles.`);
+        return;
+      }
+      cart[idx].qty++;
+    }
+  } else cart.push({ name, price: p, qty: 1 });
   saveCart();
   syncCartUI();
   showToast();
