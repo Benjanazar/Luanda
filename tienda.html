@@ -3939,6 +3939,8 @@ function checkoutCart() {
   const desc = cart.length === 1
     ? cart[0].name
     : cart.map(i => i.qty > 1 ? i.qty + 'x ' + i.name : i.name).join(', ');
+  // Guardar carrito pendiente para actualizar stock en pago-ok.html
+  localStorage.setItem('luanda_pending_cart', JSON.stringify(cart));
   window.location.href = '/api/pago?name=' + encodeURIComponent(desc.substring(0, 125)) + '&price=' + total.toFixed(2);
 }
 
