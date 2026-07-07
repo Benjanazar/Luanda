@@ -1708,7 +1708,28 @@ nav.scrolled{background:rgba(8,8,8,0.94);backdrop-filter:blur(18px);padding:13px
       <div class="pbody">
         <div class="pcat">Uñas · Gel Color</div>
         <div class="pname">Esmalte en Gel GMUME 16ml — Soak-Off UV/LED</div>
-        <div class="pdesc">Fórmula brillante de larga duración. 19 colores disponibles — usá las flechas para ver cada tono.</div>
+        <div class="pdesc">Fórmula brillante de larga duración. Elegí el color:</div>
+        <select class="color-select" onchange="colorSelectChange(this)">
+          <option value="0">Blanco</option>
+          <option value="1">Negro</option>
+          <option value="2">Rosa Claro</option>
+          <option value="3">Rojo Coral</option>
+          <option value="4">Azul Cielo</option>
+          <option value="5">Terracota</option>
+          <option value="6">Lima</option>
+          <option value="7">Azul Marino</option>
+          <option value="8">Fucsia</option>
+          <option value="9">Lila</option>
+          <option value="10">Rojo</option>
+          <option value="11">Verde Manzana</option>
+          <option value="12">Violeta</option>
+          <option value="13">Rosa Nude</option>
+          <option value="14">Melocotón</option>
+          <option value="15">Burdeos</option>
+          <option value="16">N-022 Amarillo</option>
+          <option value="17">N-008 Rosa</option>
+          <option value="18">Nude Caramel</option>
+        </select>
         <div class="pfooter">
           <div class="pprice">9,50 €</div>
           <button class="pbtn" onclick="addCarouselToCart(this,'9.50')">Añadir al carrito</button>
