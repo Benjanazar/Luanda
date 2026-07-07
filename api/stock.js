@@ -16,6 +16,11 @@ const INITIAL_STOCK = {
   'Pulidor Mini NB Leda Pack': 19,
   'Kit Podologia Inox 2 piezas': 10,
   'Pegamento Rhinestone Glue 20ml': 10,
+  'Caja Organizadora 12 Grid Cristales Dorado': 6,
+  'Caja Organizadora 12 Grid Cristales Verde': 6,
+  'YANMOSJ Parches Gel Ojos': 6,
+  'Kit Cvian Lash Lift Permanente Pestañas': 4,
+  'Estuche Pestañas Limpiador Rizador': 4,
 };
 
 async function redisGet(url, token, key) {
