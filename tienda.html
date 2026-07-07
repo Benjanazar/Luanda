@@ -3916,9 +3916,16 @@ function cNav(wrap,dir){
   wrap.dataset.c=n;
   imgs.forEach(function(img,i){img.style.opacity=i===n?'1':'0'});
   dots.forEach(function(d,i){d.classList.toggle('on',i===n)});
+  var sel=wrap.closest('.pcard').querySelector('.color-select');
+  if(sel) sel.value=n;
 }
 function cGo(dot,idx){
   var wrap=dot.closest('.carousel-wrap');
+  cNav(wrap,idx-parseInt(wrap.dataset.c||0));
+}
+function colorSelectChange(sel){
+  var idx=parseInt(sel.value);
+  var wrap=sel.closest('.pcard').querySelector('.carousel-wrap');
   cNav(wrap,idx-parseInt(wrap.dataset.c||0));
 }
 </script>
