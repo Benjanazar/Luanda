@@ -10,7 +10,8 @@
 body{background:#0d0d0d;color:#f5f0e8;font-family:'Georgia',serif;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;text-align:center;padding:40px 20px}
 .icon{font-size:64px;margin-bottom:24px}
 h1{font-size:clamp(24px,4vw,36px);font-weight:400;color:#c9a84c;margin-bottom:12px}
-p{font-size:15px;color:rgba(245,240,232,.65);line-height:1.7;max-width:440px;margin-bottom:32px}
+p{font-size:15px;color:rgba(245,240,232,.65);line-height:1.7;max-width:440px;margin-bottom:24px}
+.order-box{margin-bottom:28px;font-size:13px;color:rgba(245,240,232,.55);line-height:1.9;max-width:400px;text-align:left;border:1px solid rgba(201,168,76,.15);border-radius:4px;padding:16px 20px}
 a{display:inline-block;background:#c9a84c;color:#0d0d0d;font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;padding:14px 28px;border-radius:2px}
 a:hover{background:#e0be6a}
 </style>
@@ -18,22 +19,55 @@ a:hover{background:#e0be6a}
 <body>
 <div class="icon">✓</div>
 <h1>¡Pago completado!</h1>
-<p>Tu pedido ha sido recibido correctamente. Te contactaremos por WhatsApp para coordinar la entrega.</p>
+<p>Tu pedido ha sido recibido. Te contactaremos por WhatsApp para coordinar la entrega.</p>
+<div class="order-box" id="orderBox" style="display:none"></div>
 <a href="tienda.html">Seguir comprando</a>
 <script>
-// Registrar ventas en el servidor y limpiar carrito
 (async () => {
   try {
     const pending = JSON.parse(localStorage.getItem('luanda_pending_cart') || '[]');
+    const shipping = JSON.parse(localStorage.getItem('luanda_shipping') || 'null');
+
+    // Mostrar resumen del pedido
+    if (shipping) {
+      const box = document.getElementById('orderBox');
+      let html = `<strong style="color:#c9a84c">${shipping.nombre}</strong><br>`;
+      html += `📱 ${shipping.telefono}<br>`;
+      html += `📦 ${shipping.label}`;
+      if (shipping.cost > 0) html += ` (+${shipping.cost.toFixed(2).replace('.',',')} €)`;
+      if (shipping.direccion) html += `<br>📍 ${shipping.direccion}, ${shipping.cp} ${shipping.ciudad}`;
+      box.innerHTML = html;
+      box.style.display = 'block';
+
+      // Enviar notificación WhatsApp a Luanda con todos los detalles
+      if (pending.length) {
+        const items = pending.map(i => `  • ${i.qty > 1 ? i.qty + 'x ' : ''}${i.name}`).join('\n');
+        const subtotal = pending.reduce((s, i) => s + parseFloat(i.price) * i.qty, 0);
+        const total = subtotal + (shipping.cost || 0);
+        let msg = `🛍️ *NUEVO PEDIDO LUANDA*\n\n`;
+        msg += `👤 ${shipping.nombre}\n`;
+        msg += `📱 ${shipping.telefono}\n`;
+        msg += `📦 ${shipping.label}\n`;
+        if (shipping.direccion) msg += `📍 ${shipping.direccion}, ${shipping.cp} ${shipping.ciudad}\n`;
+        msg += `\n*Productos:*\n${items}\n\n`;
+        if (shipping.cost > 0) msg += `Envío: ${shipping.cost.toFixed(2).replace('.',',')} €\n`;
+        msg += `💰 *TOTAL: ${total.toFixed(2).replace('.',',')} €* ✅ Pagado`;
+        setTimeout(() => {
+          window.open('https://wa.me/34610898948?text=' + encodeURIComponent(msg), '_blank');
+        }, 1000);
+      }
+    }
+
+    // Registrar ventas en stock y limpiar localStorage
     if (pending.length) {
-      const items = pending.map(i => ({ name: i.name, qty: i.qty }));
       await fetch('/api/stock-buy', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ items })
+        body: JSON.stringify({ items: pending.map(i => ({ name: i.name, qty: i.qty })) })
       });
       localStorage.removeItem('luanda_pending_cart');
       localStorage.removeItem('luanda_cart');
+      localStorage.removeItem('luanda_shipping');
     }
   } catch(e) {}
 })();
