@@ -197,6 +197,31 @@ nav.scrolled{background:rgba(8,8,8,0.94);backdrop-filter:blur(18px);padding:13px
 .cart-toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%) translateY(12px);background:rgba(13,13,13,0.92);border:1px solid rgba(201,168,76,.4);color:var(--gold);font-size:12px;letter-spacing:.08em;padding:10px 22px;border-radius:4px;z-index:9999;white-space:nowrap;pointer-events:none;opacity:0;transition:opacity .22s,transform .22s}
 .cart-toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 @media(max-width:768px){.cart-drawer{width:100vw}}
+
+/* MODAL ENVÍO */
+.smodal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.72);z-index:10001;display:none;align-items:center;justify-content:center;padding:16px}
+.smodal-overlay.open{display:flex}
+.smodal{background:#111;border:1px solid rgba(201,168,76,.22);border-radius:6px;width:100%;max-width:440px;max-height:90vh;overflow-y:auto;padding:28px 24px 32px}
+.smodal-title{font-family:var(--serif);font-size:20px;color:var(--gold);margin-bottom:6px}
+.smodal-sub{font-size:12px;color:rgba(245,240,232,.45);margin-bottom:22px;letter-spacing:.04em}
+.sfield{margin-bottom:14px}
+.sfield label{display:block;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:rgba(245,240,232,.45);margin-bottom:6px}
+.sfield input,.sfield select,.sfield textarea{width:100%;background:#0d0d0d;color:#f5f0e8;border:1px solid rgba(201,168,76,.25);border-radius:3px;padding:10px 12px;font-family:var(--serif);font-size:14px;outline:none;transition:border-color .2s;resize:none}
+.sfield input:focus,.sfield select:focus,.sfield textarea:focus{border-color:rgba(201,168,76,.6)}
+.sfield select{appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23c9a84c'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;background-color:#0d0d0d}
+.sshipcost{display:flex;align-items:center;justify-content:space-between;margin:16px 0 20px;padding:12px 14px;border:1px solid rgba(201,168,76,.15);border-radius:3px;background:rgba(201,168,76,.04)}
+.sshipcost-label{font-size:11px;color:rgba(245,240,232,.5);letter-spacing:.08em}
+.sshipcost-price{font-family:var(--serif);font-size:20px;color:var(--gold)}
+.stotal-row{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:18px;border-top:1px solid rgba(201,168,76,.12);padding-top:14px}
+.stotal-label{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:rgba(245,240,232,.4)}
+.stotal-amount{font-family:var(--serif);font-size:26px;color:var(--gold)}
+.saddress-wrap{display:none}
+.saddress-wrap.visible{display:block}
+.sbtn-row{display:flex;gap:10px;margin-top:4px}
+.sbtn-cancel{flex:1;background:none;border:1px solid rgba(201,168,76,.2);color:rgba(245,240,232,.5);font-size:11px;letter-spacing:.1em;text-transform:uppercase;padding:13px;border-radius:3px;cursor:pointer;transition:border-color .2s}
+.sbtn-cancel:hover{border-color:rgba(201,168,76,.5)}
+.sbtn-pay{flex:2;background:var(--gold);color:#0d0d0d;font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:14px;border:none;border-radius:3px;cursor:pointer;transition:background .2s}
+.sbtn-pay:hover{background:var(--gold2)}
 </style>
 </head>
 <body>
