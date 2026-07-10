@@ -3759,6 +3759,65 @@ nav.scrolled{background:rgba(8,8,8,0.94);backdrop-filter:blur(18px);padding:13px
 </div>
 <div class="cart-toast" id="cartToast">✓ Añadido al carrito</div>
 
+<!-- MODAL ENVÍO -->
+<div class="smodal-overlay" id="smodal" onclick="if(event.target===this)closeSmodal()">
+  <div class="smodal">
+    <div class="smodal-title">Datos de envío</div>
+    <div class="smodal-sub">Completa tus datos para proceder al pago</div>
+
+    <div class="sfield">
+      <label>Nombre completo</label>
+      <input type="text" id="sNombre" placeholder="Tu nombre y apellidos" autocomplete="name">
+    </div>
+    <div class="sfield">
+      <label>Teléfono</label>
+      <input type="tel" id="sTelefono" placeholder="6XX XXX XXX" autocomplete="tel">
+    </div>
+    <div class="sfield">
+      <label>Tipo de envío</label>
+      <select id="sTipoEnvio" onchange="updateShipUI()">
+        <option value="domicilio">🏠 Envío a domicilio — 6,50 €</option>
+        <option value="inpost">📦 Locker InPost — 4,50 €</option>
+        <option value="tienda">🏪 Recogida en tienda — Gratis</option>
+      </select>
+    </div>
+
+    <div class="saddress-wrap" id="sAddressWrap">
+      <div class="sfield">
+        <label>Dirección completa</label>
+        <input type="text" id="sDireccion" placeholder="Calle, número, piso..." autocomplete="street-address">
+      </div>
+      <div style="display:flex;gap:10px">
+        <div class="sfield" style="flex:1">
+          <label>Código postal</label>
+          <input type="text" id="sCp" placeholder="46001" maxlength="5" autocomplete="postal-code">
+        </div>
+        <div class="sfield" style="flex:2">
+          <label>Ciudad</label>
+          <input type="text" id="sCiudad" placeholder="Valencia" autocomplete="address-level2">
+        </div>
+      </div>
+    </div>
+
+    <div id="sinpostNote" style="display:none;font-size:12px;color:rgba(245,240,232,.45);margin-bottom:14px;line-height:1.6;padding:10px 12px;border:1px solid rgba(201,168,76,.12);border-radius:3px">
+      Te contactaremos por WhatsApp para coordinar el locker InPost más cercano a tu ubicación.
+    </div>
+
+    <div class="sshipcost">
+      <span class="sshipcost-label">Gastos de envío</span>
+      <span class="sshipcost-price" id="sShipPrice">6,50 €</span>
+    </div>
+    <div class="stotal-row">
+      <span class="stotal-label">Total a pagar</span>
+      <span class="stotal-amount" id="sTotalFinal">0,00 €</span>
+    </div>
+    <div class="sbtn-row">
+      <button class="sbtn-cancel" onclick="closeSmodal()">Cancelar</button>
+      <button class="sbtn-pay" onclick="submitShipping()">💳 &nbsp;Pagar</button>
+    </div>
+  </div>
+</div>
+
 <script>
 /* NAV scroll */
 const nav = document.getElementById('mainNav');
