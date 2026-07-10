@@ -739,9 +739,9 @@ nav.scrolled{background:rgba(8,8,8,0.94);backdrop-filter:blur(18px);padding:13px
     </div>
 
     <!-- Pure Gloss Glossco -->
-    <div class="pcard" data-cat="Coloración">
+    <div class="pcard" data-cat="Coloración" data-stock="2">
       <div class="pimg">
-        <img src="assets/coloracion-pure-gloss.jpeg" alt="Coloración Pure Gloss Glossco"
+        <img src="assets/pure-gloss-coloracion.jpeg" alt="Coloración Demi Permanente Pure Gloss Glossco"
              onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
         <div class="pimg-placeholder" style="display:none">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
@@ -752,10 +752,14 @@ nav.scrolled{background:rgba(8,8,8,0.94);backdrop-filter:blur(18px);padding:13px
       <div class="pbody">
         <div class="pcat">Coloración</div>
         <div class="pname">Coloración Demi Permanente Pure Gloss — Glossco</div>
-        <div class="pdesc">Colorea, trata y aporta un brillo sublime. Matiza y da tono sin amoníaco.</div>
+        <div class="pdesc">Colorea, trata y aporta un brillo sublime. Matiza y da tono. Elegí el tono:</div>
+        <select class="color-select" id="pureGlossSelect">
+          <option value="7.44">Tono 7.44 — Rubio Cobrizo Intenso</option>
+          <option value="10.21">Tono 10.21 — Rubio Platino Irisado</option>
+        </select>
         <div class="pfooter">
           <div class="pprice">12 €</div>
-          <button class="pbtn" onclick="addToCart('Coloración Pure Gloss Glossco','12')">Añadir al carrito</button>
+          <button class="pbtn" onclick="addToCart('Coloración Pure Gloss ' + document.getElementById('pureGlossSelect').options[document.getElementById('pureGlossSelect').selectedIndex].text, '12')">Añadir al carrito</button>
         </div>
       </div>
     </div>
