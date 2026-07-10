@@ -21,6 +21,12 @@ const INITIAL_STOCK = {
   'YANMOSJ Parches Gel Ojos': 6,
   'Kit Cvian Lash Lift Permanente Pestañas': 4,
   'Estuche Pestañas Limpiador Rizador': 4,
+  'Pack Moor EQ Key Ritual': 4,
+  'Moor Snap Velvet Smooth Protect Spray 200ml': 4,
+  'Moor EQ Key Force Oil': 4,
+  'RISFORT Gel Fijador Extrafuerte 200ml': 4,
+  'SAGA PRO BTX Effect Relleno Capilar': 2,
+  'Pack Post Alisado Oyster Cutinol Plus': 6,
 };
 
 async function redisGet(url, token, key) {
