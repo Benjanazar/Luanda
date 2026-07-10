@@ -4000,13 +4000,56 @@ function showToast() {
   _toastTimer = setTimeout(() => t.classList.remove('show'), 2200);
 }
 
+const SHIP_COSTS = { domicilio: 6.50, inpost: 4.50, tienda: 0 };
+const SHIP_LABELS = { domicilio: 'Envío a domicilio', inpost: 'Locker InPost', tienda: 'Recogida en tienda' };
+
 function checkoutCart() {
   if (!cart.length) return;
-  const total = cartTotal();
+  closeCart();
+  // Rellenar total en el modal
+  updateShipUI();
+  document.getElementById('smodal').classList.add('open');
+}
+
+function closeSmodal() {
+  document.getElementById('smodal').classList.remove('open');
+}
+
+function updateShipUI() {
+  const tipo = document.getElementById('sTipoEnvio').value;
+  const cost = SHIP_COSTS[tipo];
+  const products = cartTotal();
+  const total = products + cost;
+  const addr = document.getElementById('sAddressWrap');
+  const note = document.getElementById('sinpostNote');
+  addr.classList.toggle('visible', tipo === 'domicilio');
+  note.style.display = tipo === 'inpost' ? 'block' : 'none';
+  document.getElementById('sShipPrice').textContent = cost === 0 ? 'Gratis' : cost.toFixed(2).replace('.', ',') + ' €';
+  document.getElementById('sTotalFinal').textContent = total.toFixed(2).replace('.', ',') + ' €';
+}
+
+function submitShipping() {
+  const nombre = document.getElementById('sNombre').value.trim();
+  const telefono = document.getElementById('sTelefono').value.trim();
+  const tipo = document.getElementById('sTipoEnvio').value;
+  const direccion = document.getElementById('sDireccion').value.trim();
+  const cp = document.getElementById('sCp').value.trim();
+  const ciudad = document.getElementById('sCiudad').value.trim();
+
+  if (!nombre) { alert('Por favor indica tu nombre.'); return; }
+  if (!telefono) { alert('Por favor indica tu teléfono.'); return; }
+  if (tipo === 'domicilio' && (!direccion || !cp || !ciudad)) {
+    alert('Por favor completa la dirección de envío.'); return;
+  }
+
+  const shipping = { tipo, label: SHIP_LABELS[tipo], cost: SHIP_COSTS[tipo], nombre, telefono, direccion, cp, ciudad };
+  localStorage.setItem('luanda_shipping', JSON.stringify(shipping));
+
+  const total = cartTotal() + SHIP_COSTS[tipo];
   const desc = cart.length === 1
     ? cart[0].name
     : cart.map(i => i.qty > 1 ? i.qty + 'x ' + i.name : i.name).join(', ');
-  // Guardar carrito pendiente para actualizar stock en pago-ok.html
+
   localStorage.setItem('luanda_pending_cart', JSON.stringify(cart));
   window.location.href = '/api/pago?name=' + encodeURIComponent(desc.substring(0, 125)) + '&price=' + total.toFixed(2);
 }
