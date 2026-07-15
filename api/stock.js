@@ -27,6 +27,7 @@ const INITIAL_STOCK = {
   'RISFORT Gel Fijador Extrafuerte 200ml': 4,
   'SAGA PRO BTX Effect Relleno Capilar': 2,
   'Pack Post Alisado Oyster Cutinol Plus': 6,
+  'Secador Rápido de Uñas Risfort': 4,
 };
 
 async function redisGet(url, token, key) {
