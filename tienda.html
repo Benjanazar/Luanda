@@ -3975,7 +3975,7 @@ function remainingStock(name) {
 }
 
 function updateStockUI() {
-  document.querySelectorAll('.pcard[data-stock]').forEach(card => {
+  document.querySelectorAll('.pcard').forEach(card => {
     const btn = card.querySelector('.pbtn');
     if (!btn) return;
     const m = btn.getAttribute('onclick')?.match(/addToCart\('([^']+)'/);
@@ -3990,7 +3990,7 @@ function updateStockUI() {
       btn.disabled = false;
       btn.classList.remove('pbtn-agotado');
       if (btn.textContent === 'Fuera de stock') btn.textContent = 'Añadir al carrito';
-      btn.title = rem <= 5 ? `Quedan ${rem} unidad${rem === 1 ? '' : 'es'}` : '';
+      btn.title = rem <= 3 ? `¡Solo quedan ${rem}!` : '';
     }
   });
 }
