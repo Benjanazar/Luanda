@@ -3970,6 +3970,9 @@ document.querySelectorAll('.filt').forEach(btn => {
     document.querySelectorAll('.pcard').forEach(card => {
       card.dataset.hidden = (cat !== 'todos' && !card.dataset.cat.split(' ').includes(cat)) ? 'true' : 'false';
     });
+    document.querySelectorAll('.section-sep').forEach(sep => {
+      sep.style.display = cat === 'todos' ? '' : 'none';
+    });
   });
 });
 
