@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /pago-ok.html
+Disallow: /pago-error.html
+
+Sitemap: https://luanda.com.es/sitemap.xml
