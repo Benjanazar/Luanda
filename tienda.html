@@ -4042,11 +4042,14 @@ function removeFromCart(idx) {
 function changeQty(idx, delta) {
   const name = cart[idx].name;
   const newQty = Math.max(1, cart[idx].qty + delta);
-  const stock = getStock(name);
-  const sold = getSold()[name] || 0;
-  if (delta > 0 && newQty + sold > stock) {
-    alert(`Solo quedan ${Math.max(0, stock - sold)} unidades de este producto.`);
-    return;
+  if (delta > 0) {
+    const rem = remainingStock(name);
+    if (newQty > cart[idx].qty + rem) {
+      const total = cart[idx].qty + rem;
+      if (total <= 0) { alert('Este producto está agotado.'); return; }
+      alert(`Solo quedan ${rem} unidad${rem === 1 ? '' : 'es'} disponibles.`);
+      return;
+    }
   }
   cart[idx].qty = newQty;
   saveCart();
