@@ -3983,13 +3983,13 @@ function updateStockUI() {
     const name = m[1];
     const rem = remainingStock(name);
     if (rem <= 0) {
-      btn.textContent = 'Agotado';
+      btn.textContent = 'Fuera de stock';
       btn.disabled = true;
       btn.classList.add('pbtn-agotado');
     } else {
       btn.disabled = false;
       btn.classList.remove('pbtn-agotado');
-      if (btn.textContent === 'Agotado') btn.textContent = 'Añadir al carrito';
+      if (btn.textContent === 'Fuera de stock') btn.textContent = 'Añadir al carrito';
       btn.title = rem <= 5 ? `Quedan ${rem} unidad${rem === 1 ? '' : 'es'}` : '';
     }
   });
