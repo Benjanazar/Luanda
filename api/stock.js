@@ -97,6 +97,7 @@ const INITIAL_STOCK = {
   'Láser UV Antihongos Portátil ONLYNDS': 4,
 
   // UÑAS — Esmaltes y geles
+  'Magic Remover XEIJAYI 15ml': 10,
   'Endurecedor Uñas Mussvital Essentials': 0,
   'Rubber Gel Ojo de Gato NB N-007': 8,
   'Rubber Gel Ojo de Gato Plata NB N-002': 8,
