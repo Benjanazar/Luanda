@@ -156,7 +156,6 @@ const INITIAL_STOCK = {
   'Pack Moor EQ Key Ritual': 4,
   'Moor Snap Velvet Smooth Protect Spray 200ml': 4,
   'Moor EQ Key Force Oil': 4,
-  'RISFORT Gel Fijador Extrafuerte 200ml': 4,
   'SAGA PRO BTX Effect Relleno Capilar': 2,
   'Kit Cvian Lash Lift Permanente Pestañas': 4,
   'Estuche Pestañas Limpiador Rizador': 4,
