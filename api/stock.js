@@ -38,6 +38,7 @@ const INITIAL_STOCK = {
 
   // STYLING
   'Laca Ecológica Elegance Liheto': 8,
+  'RISFORT Gel Fijador Extrafuerte 200ml': 4,
 
   // RIZOS
   'Crema Rizos Glossco Waves & Curls Plus': 1,
