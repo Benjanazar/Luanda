@@ -75,6 +75,17 @@ a:hover{background:#e0be6a}
       }
     }
 
+    // Pixel Purchase — solo si hay pedido real
+    if (pending.length && !isNaN(total) && total > 0) {
+      const eventID = 'luanda_' + Date.now() + '_' + Math.random().toString(36).slice(2, 7);
+      fbq('track', 'Purchase', {
+        value: total,
+        currency: 'EUR',
+        content_type: 'product',
+        num_items: pending.reduce((s, i) => s + i.qty, 0)
+      }, { eventID: eventID });
+    }
+
     // Registrar ventas en stock y limpiar localStorage
     if (pending.length) {
       await fetch('/api/stock-buy', {
