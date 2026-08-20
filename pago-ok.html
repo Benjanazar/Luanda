@@ -51,6 +51,13 @@ a:hover{background:#e0be6a}
     const pending = JSON.parse(localStorage.getItem('luanda_pending_cart') || '[]');
     const shipping = JSON.parse(localStorage.getItem('luanda_shipping') || 'null');
 
+    // Parámetros que Redsys añade a la URL de retorno — usados para verificar el pago en el servidor
+    const urlParams = new URLSearchParams(window.location.search);
+    const dsParams = urlParams.get('Ds_MerchantParameters');
+    const dsSig    = urlParams.get('Ds_Signature');
+
+    let total = 0;
+
     // Mostrar resumen del pedido (sin innerHTML para evitar XSS)
     if (shipping) {
       const esc = s => String(s ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
@@ -63,11 +70,12 @@ a:hover{background:#e0be6a}
       box.innerHTML = html;
       box.style.display = 'block';
 
-      // Enviar notificación WhatsApp a Luanda con todos los detalles
       if (pending.length) {
-        const items = pending.map(i => `  • ${i.qty > 1 ? i.qty + 'x ' : ''}${i.name}`).join('\n');
         const subtotal = pending.reduce((s, i) => s + parseFloat(i.price) * i.qty, 0);
-        const total = subtotal + (shipping.cost || 0);
+        total = subtotal + (shipping.cost || 0);
+
+        // Enviar notificación WhatsApp a Luanda con todos los detalles
+        const items = pending.map(i => `  • ${i.qty > 1 ? i.qty + 'x ' : ''}${i.name}`).join('\n');
         let msg = `🛍️ *NUEVO PEDIDO LUANDA*\n\n`;
         msg += `👤 ${shipping.nombre}\n`;
         msg += `📱 ${shipping.telefono}\n`;
@@ -83,7 +91,7 @@ a:hover{background:#e0be6a}
     }
 
     // Pixel Purchase — solo si hay pedido real
-    if (pending.length && !isNaN(total) && total > 0) {
+    if (pending.length && total > 0) {
       const eventID = 'luanda_' + Date.now() + '_' + Math.random().toString(36).slice(2, 7);
       fbq('track', 'Purchase', {
         value: total,
@@ -93,12 +101,16 @@ a:hover{background:#e0be6a}
       }, { eventID: eventID });
     }
 
-    // Registrar ventas en stock y limpiar localStorage
-    if (pending.length) {
-      await fetch('/api/stock-buy', {
+    // Registrar ventas en stock (verificando firma Redsys en el servidor) y limpiar localStorage
+    if (pending.length && dsParams && dsSig) {
+      await fetch('/api/stock-verify', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ items: pending.map(i => ({ name: i.name, qty: i.qty })) })
+        body: JSON.stringify({
+          Ds_MerchantParameters: dsParams,
+          Ds_Signature: dsSig,
+          items: pending.map(i => ({ name: i.name, qty: i.qty }))
+        })
       });
       localStorage.removeItem('luanda_pending_cart');
       localStorage.removeItem('luanda_cart');
