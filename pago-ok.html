@@ -42,17 +42,24 @@ a:hover{background:#e0be6a}
 <script>
 (async () => {
   try {
+    // Limpiar localStorage huérfano (más de 2 horas sin completar compra)
+    const ts = parseInt(localStorage.getItem('luanda_cart_ts') || '0');
+    if (ts && Date.now() - ts > 2 * 60 * 60 * 1000) {
+      ['luanda_pending_cart','luanda_cart','luanda_shipping','luanda_cart_ts'].forEach(k => localStorage.removeItem(k));
+    }
+
     const pending = JSON.parse(localStorage.getItem('luanda_pending_cart') || '[]');
     const shipping = JSON.parse(localStorage.getItem('luanda_shipping') || 'null');
 
-    // Mostrar resumen del pedido
+    // Mostrar resumen del pedido (sin innerHTML para evitar XSS)
     if (shipping) {
+      const esc = s => String(s ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
       const box = document.getElementById('orderBox');
-      let html = `<strong style="color:#c9a84c">${shipping.nombre}</strong><br>`;
-      html += `📱 ${shipping.telefono}<br>`;
-      html += `📦 ${shipping.label}`;
-      if (shipping.cost > 0) html += ` (+${shipping.cost.toFixed(2).replace('.',',')} €)`;
-      if (shipping.direccion) html += `<br>📍 ${shipping.direccion}, ${shipping.cp} ${shipping.ciudad}`;
+      let html = `<strong style="color:#c9a84c">${esc(shipping.nombre)}</strong><br>`;
+      html += `📱 ${esc(shipping.telefono)}<br>`;
+      html += `📦 ${esc(shipping.label)}`;
+      if (shipping.cost > 0) html += ` (+${esc(shipping.cost.toFixed(2).replace('.',','))} €)`;
+      if (shipping.direccion) html += `<br>📍 ${esc(shipping.direccion)}, ${esc(shipping.cp)} ${esc(shipping.ciudad)}`;
       box.innerHTML = html;
       box.style.display = 'block';
 
