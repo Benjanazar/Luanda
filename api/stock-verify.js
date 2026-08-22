@@ -61,9 +61,18 @@ module.exports = async function handler(req, res) {
 
   if (kvUrl && kvToken) {
     await Promise.all(
-      items.map(({ name, qty }) =>
-        redisIncrBy(kvUrl, kvToken, `sold:${name}`, Math.max(1, parseInt(qty) || 1))
-      )
+      items.map(async ({ name, qty }) => {
+        const amount = Math.max(1, parseInt(qty) || 1);
+        const override = await redisCmd(kvUrl, kvToken, 'get', `stock:${name}`);
+        if (override !== null) {
+          // Admin gestiona stock directo — decrementar override (mínimo 0)
+          const current = Math.max(0, parseInt(override));
+          await redisCmd(kvUrl, kvToken, 'set', `stock:${name}`, Math.max(0, current - amount));
+        } else {
+          // Sistema original — incrementar vendidos
+          await redisCmd(kvUrl, kvToken, 'incrby', `sold:${name}`, amount);
+        }
+      })
     );
   }
 
