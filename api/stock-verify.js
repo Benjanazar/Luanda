@@ -25,11 +25,16 @@ function verifySignature(merchantParams, signature, secretKey) {
   }
 }
 
-async function redisIncrBy(url, token, key, by) {
-  await fetch(`${url}/incrby/${encodeURIComponent(key)}/${by}`, {
+async function redisCmd(url, token, cmd, key, arg) {
+  const path = arg !== undefined
+    ? `/${cmd}/${encodeURIComponent(key)}/${arg}`
+    : `/${cmd}/${encodeURIComponent(key)}`;
+  const r = await fetch(`${url}${path}`, {
     method: 'POST',
     headers: { Authorization: `Bearer ${token}` }
   });
+  const d = await r.json();
+  return d.result ?? null;
 }
 
 module.exports = async function handler(req, res) {
