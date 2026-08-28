@@ -103,6 +103,12 @@ a:hover{background:#e0be6a}
 
     // Registrar ventas en stock (verificando firma Redsys en el servidor) y limpiar localStorage
     if (pending.length && dsParams && dsSig) {
+      let orderRef = null;
+      try {
+        const decoded = JSON.parse(atob(dsParams));
+        orderRef = decoded.Ds_Order || decoded.DS_MERCHANT_ORDER || null;
+      } catch {}
+
       await fetch('/api/stock-verify', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -112,6 +118,16 @@ a:hover{background:#e0be6a}
           items: pending.map(i => ({ name: i.name, qty: i.qty }))
         })
       });
+
+      // Notificación por email al vendedor y al comprador
+      if (shipping) {
+        fetch('/api/notify-order', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ items: pending, shipping, total, orderRef })
+        }).catch(() => {});
+      }
+
       localStorage.removeItem('luanda_pending_cart');
       localStorage.removeItem('luanda_cart');
       localStorage.removeItem('luanda_shipping');
