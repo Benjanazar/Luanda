@@ -4218,6 +4218,7 @@ function updateShipUI() {
 function submitShipping() {
   const nombre = document.getElementById('sNombre').value.trim();
   const telefono = document.getElementById('sTelefono').value.trim();
+  const email = document.getElementById('sEmail').value.trim();
   const tipo = document.getElementById('sTipoEnvio').value;
   const direccion = document.getElementById('sDireccion').value.trim();
   const cp = document.getElementById('sCp').value.trim();
@@ -4229,7 +4230,7 @@ function submitShipping() {
     alert('Por favor completa la dirección de envío.'); return;
   }
 
-  const shipping = { tipo, label: SHIP_LABELS[tipo], cost: SHIP_COSTS[tipo], nombre, telefono, direccion, cp, ciudad };
+  const shipping = { tipo, label: SHIP_LABELS[tipo], cost: SHIP_COSTS[tipo], nombre, telefono, email, direccion, cp, ciudad };
   localStorage.setItem('luanda_shipping', JSON.stringify(shipping));
 
   const total = cartTotal() + SHIP_COSTS[tipo];
